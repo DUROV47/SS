@@ -21,6 +21,7 @@ check.py — инвентаризация поверхности веб-серв
 """
 
 import argparse
+import ipaddress
 import re
 import socket
 import ssl
@@ -371,11 +372,60 @@ def _short(exc, limit=120):
 # Чтение входных данных
 # ---------------------------------------------------------------------------
 
+def expand_entry(entry):
+    """
+    Превращает одну строку скоупа в список IP-адресов (строк).
+
+    Поддерживаются:
+      * одиночный IP          -> [IP]
+      * CIDR-подсеть (a.b.c.d/n) -> все хосты подсети
+      * доменное имя          -> резолвится в один/несколько IP
+
+    Для подсетей /31 и /32 возвращаются все адреса как есть; для более
+    крупных сетей используются только хосты (без адреса сети и broadcast).
+    Возвращает (список_IP, предупреждение_или_None).
+    """
+    # Строка может содержать ведущий маркер списка "* " из вставленного текста.
+    entry = entry.lstrip("*").strip()
+    if not entry:
+        return [], None
+
+    # 1. CIDR-подсеть?
+    if "/" in entry:
+        try:
+            net = ipaddress.ip_network(entry, strict=False)
+        except ValueError as e:
+            return [], "некорректная подсеть '%s': %s" % (entry, e)
+        # hosts() исключает сеть/broadcast для сетей крупнее /31.
+        hosts = list(net.hosts()) if net.num_addresses > 2 \
+            else list(net)
+        return [str(h) for h in hosts], None
+
+    # 2. Просто IP-адрес?
+    try:
+        ipaddress.ip_address(entry)
+        return [entry], None
+    except ValueError:
+        pass
+
+    # 3. Доменное имя — резолвим в IP.
+    try:
+        infos = socket.getaddrinfo(entry, None, proto=socket.IPPROTO_TCP)
+        ips = sorted({info[4][0] for info in infos})
+        if ips:
+            return ips, None
+        return [], "не удалось разрешить имя '%s'" % entry
+    except socket.gaierror as e:
+        return [], "не удалось разрешить имя '%s': %s" % (entry, e)
+
+
 def read_scope(path):
     """
-    Читает список IP из файла scope.txt.
-    Пропускает пустые строки и комментарии (#). Возвращает список строк.
+    Читает скоуп из файла и разворачивает его в плоский список IP.
+    Пропускает пустые строки и комментарии (#). Поддерживает одиночные IP,
+    CIDR-подсети и доменные имена. Дубликаты удаляются, порядок сохраняется.
     """
+    seen = set()
     targets = []
     try:
         with open(path, "r", encoding="utf-8") as f:
@@ -383,7 +433,13 @@ def read_scope(path):
                 line = line.strip()
                 if not line or line.startswith("#"):
                     continue
-                targets.append(line)
+                ips, warn = expand_entry(line)
+                if warn:
+                    print("Предупреждение: %s" % warn)
+                for ip in ips:
+                    if ip not in seen:
+                        seen.add(ip)
+                        targets.append(ip)
     except FileNotFoundError:
         print("Ошибка: файл '%s' не найден." % path)
         sys.exit(1)
