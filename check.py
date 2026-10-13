@@ -29,6 +29,7 @@ import sys
 import threading
 import time
 from collections import deque
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 
 try:
@@ -61,6 +62,7 @@ TCP_TIMEOUT = 2        # таймаут TCP-connect (сек)
 HTTP_TIMEOUT = 5       # таймаут HTTP-запроса (сек)
 MAX_REQUESTS_PER_SEC = 5   # ограничение частоты запросов (rate limit)
 MAX_REDIRECTS = 10     # максимум звеньев в цепочке редиректов
+DEFAULT_WORKERS = 30   # число параллельных потоков по умолчанию
 
 # Заголовки безопасности, наличие которых мы проверяем.
 SECURITY_HEADERS = [
@@ -603,6 +605,10 @@ def main():
         "--output", default="report.txt",
         help="файл для отчёта (по умолчанию: report.txt)",
     )
+    parser.add_argument(
+        "--workers", type=int, default=DEFAULT_WORKERS,
+        help="число параллельных потоков (по умолчанию: %d)" % DEFAULT_WORKERS,
+    )
     args = parser.parse_args()
 
     targets = read_scope(args.scope)
@@ -615,50 +621,71 @@ def main():
         print("Список портов пуст.")
         sys.exit(1)
 
+    workers = max(1, args.workers)
     total = len(targets) * len(ports)
     print("Цели: %d IP x %d портов = %d проверок." %
           (len(targets), len(ports), total))
-    print("Rate limit: %d запросов/сек. Таймауты: TCP %ds, HTTP %ds.\n" %
-          (MAX_REQUESTS_PER_SEC, TCP_TIMEOUT, HTTP_TIMEOUT))
+    print("Потоков: %d. Rate limit: %d HTTP-запросов/сек. "
+          "Таймауты: TCP %ds, HTTP %ds.\n" %
+          (workers, MAX_REQUESTS_PER_SEC, TCP_TIMEOUT, HTTP_TIMEOUT))
 
+    # Общий rate limiter на все потоки: ограничивает именно HTTP-запросы
+    # (не TCP-проверки), поэтому параллелизм ускоряет перебор закрытых портов,
+    # не нарушая лимит 5 запросов/сек к веб-приложениям.
     limiter = RateLimiter(MAX_REQUESTS_PER_SEC)
     results = []
+    results_lock = threading.Lock()
     done = 0
+    done_lock = threading.Lock()
 
-    # Последовательный проход. rate limiter страхует частоту HTTP-запросов.
-    for ip in targets:
-        for port in ports:
-            done += 1
-            try:
-                res = probe_service(ip, port, limiter)
-            except KeyboardInterrupt:
-                print("\nПрервано пользователем. Записываю частичный отчёт...")
-                write_report(results, args.output, args.scope, ports)
-                sys.exit(130)
-            except Exception as e:
-                # Любая непредвиденная ошибка не должна ронять весь скан.
-                res = ServiceResult(ip, port)
-                res.error = "внутренняя ошибка: %s" % _short(e)
+    # Полный список заданий (IP, порт).
+    jobs = [(ip, port) for ip in targets for port in ports]
 
-            results.append(res)
+    def worker(job):
+        ip, port = job
+        try:
+            return probe_service(ip, port, limiter)
+        except Exception as e:
+            # Любая непредвиденная ошибка не должна ронять весь скан.
+            res = ServiceResult(ip, port)
+            res.error = "внутренняя ошибка: %s" % _short(e)
+            return res
 
-            # Короткий прогресс в консоль.
-            status = "closed"
-            if res.status_code is not None:
-                flags = []
-                if res.has_login_form:
-                    flags.append("login")
-                if res.missing_sec_headers:
-                    flags.append("%d missing hdr" % len(res.missing_sec_headers))
-                status = "HTTP %s%s" % (
-                    res.status_code,
-                    (" [" + ", ".join(flags) + "]") if flags else "",
-                )
-            elif res.tcp_open:
-                status = "tcp open, no http"
+    def format_status(res):
+        if res.status_code is not None:
+            flags = []
+            if res.has_login_form:
+                flags.append("login")
+            if res.missing_sec_headers:
+                flags.append("%d missing hdr" % len(res.missing_sec_headers))
+            return "HTTP %s%s" % (
+                res.status_code,
+                (" [" + ", ".join(flags) + "]") if flags else "",
+            )
+        if res.tcp_open:
+            return "tcp open, no http"
+        return "closed"
 
-            print("[%d/%d] %-21s  %s" % (done, total, res.target, status))
+    executor = ThreadPoolExecutor(max_workers=workers)
+    futures = [executor.submit(worker, job) for job in jobs]
 
+    try:
+        for fut in as_completed(futures):
+            res = fut.result()
+            with results_lock:
+                results.append(res)
+            with done_lock:
+                done += 1
+                n = done
+            print("[%d/%d] %-21s  %s" % (n, total, res.target, format_status(res)))
+    except KeyboardInterrupt:
+        # Прерывание: гасим пул и пишем частичный отчёт по тому, что успели.
+        print("\nПрервано пользователем. Останавливаю потоки и пишу отчёт...")
+        executor.shutdown(wait=False, cancel_futures=True)
+        write_report(results, args.output, args.scope, ports)
+        sys.exit(130)
+
+    executor.shutdown(wait=True)
     write_report(results, args.output, args.scope, ports)
     print("\nГотово. Отчёт сохранён в: %s" % args.output)
 
