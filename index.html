@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="referrer" content="no-referrer">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Второй директор">
+  <meta name="theme-color" content="#000000">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark light">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://egrul.nalog.ru https://bo.nalog.ru https://bo.nalog.gov.ru https://overpass-api.de https://maps.mail.ru https://overpass.private.coffee https://nominatim.openstreetmap.org https://photon.komoot.io https://search-maps.yandex.ru https://static-maps.yandex.ru https://ofv-api-v0-1-1.evotor.ru https://universal-api.1-ofd.ru https://llm.api.cloud.yandex.net https://ai.api.cloud.yandex.net https://suggestions.dadata.ru https://api-seller.ozon.ru https://platform-api2.max.ru https://raw.githubusercontent.com https://api.met.no; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'; frame-src 'none'">
+  <title>Второй директор — деньги вашего бизнеса</title>
+  <link rel="preload" href="fonts/plex-cyrillic-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css" integrity="sha384-ITuUwglQ2NZ0X7Z6/k1Oys4gUFhJhkSIs/psuuNYcsWJhcYrkamdC+p/8/OVP8b0">
+  <link rel="stylesheet" href="app.css" integrity="sha384-Eq7khZHUJig+pArjgdQ5NGEYnWGxMISCj3wuDbGpv9kagcQ6ydDnDQ7EQvkKTZiA">
+</head>
+<body>
+  <div id="root"><div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#000;color:#e8eaee;font:16px system-ui,sans-serif;text-align:center;padding:24px"><div style="width:46px;height:46px;border-radius:50%;border:3px solid #2a2c31;border-top-color:#3ccf82;animation:vd 1s linear infinite"></div><div style="font-size:20px;font-weight:600;letter-spacing:.02em">Второй директор</div><div style="color:#8d929c;max-width:280px;line-height:1.45">Загружаем программу. Первый раз — до 30 секунд, дальше открывается сразу.</div><style>@keyframes vd{to{transform:rotate(360deg)}}</style></div></div><noscript><p style="color:#fff;padding:24px">Включите JavaScript в браузере, чтобы открыть сайт.</p></noscript>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="web_native.js" integrity="sha384-JlupaKK4lvGHrPJYFdGGWWNvLH6iVCeKFVJboRAHokVRG0wcCrHCaod8P70RDfA+"></script>
+  <script src="py/pyodide.js" integrity="sha384-2k1KZNwTxSiRBsSIfsgk9Gw54d5N3WC+Kd9Rw0GrUWtfJb6cJMylHjWpECnK77FP"></script>
+  <script src="app.js" integrity="sha384-kh0EHdUFdlEcjTGcneXItch9MGvS3A6fbe1fVTDoQesapffgjO54lqpb6fXQ4LTz"></script>
+</body>
+</html>

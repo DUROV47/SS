@@ -1,0 +1,392 @@
+{
+ "info": {
+  "abi_version": "2024_0",
+  "arch": "wasm32",
+  "platform": "emscripten_3_1_58",
+  "python": "3.12.7",
+  "version": "0.27.8"
+ },
+ "packages": {
+  "pydantic": {
+   "depends": [
+    "typing-extensions",
+    "pydantic-core",
+    "annotated-types"
+   ],
+   "file_name": "pydantic-2.10.5-py3-none-any.whl",
+   "imports": [
+    "pydantic"
+   ],
+   "install_dir": "site",
+   "name": "pydantic",
+   "package_type": "package",
+   "sha256": "17cbebe602dec8399ca614e7a672466c7f89541ceef8ce415ccfeec7f53e2d77",
+   "unvendored_tests": false,
+   "version": "2.10.5"
+  },
+  "pydantic-core": {
+   "depends": [],
+   "file_name": "pydantic_core-2.27.2-cp312-cp312-pyodide_2024_0_wasm32.whl",
+   "imports": [
+    "pydantic_core"
+   ],
+   "install_dir": "site",
+   "name": "pydantic_core",
+   "package_type": "package",
+   "sha256": "eefd735db79e36e3425e4a821fc9df6cb172d2845f0d4a2a1038eb5f4d5c1d0c",
+   "unvendored_tests": false,
+   "version": "2.27.2"
+  },
+  "annotated-types": {
+   "depends": [],
+   "file_name": "annotated_types-0.6.0-py3-none-any.whl",
+   "imports": [
+    "annotated_types"
+   ],
+   "install_dir": "site",
+   "name": "annotated-types",
+   "package_type": "package",
+   "sha256": "35e164049892aaefec2af367377ed9373b108dd80ae0079a3fb23f1fe7a34ace",
+   "unvendored_tests": true,
+   "version": "0.6.0"
+  },
+  "sqlite3": {
+   "depends": [],
+   "file_name": "sqlite3-1.0.0-cp312-cp312-pyodide_2024_0_wasm32.whl",
+   "imports": [
+    "sqlite3",
+    "_sqlite3"
+   ],
+   "install_dir": "site",
+   "name": "sqlite3",
+   "package_type": "cpython_module",
+   "sha256": "43061928762b03482676a1e11dcef99a003148e59fe914b6a3e41180c382cfc3",
+   "unvendored_tests": false,
+   "version": "1.0.0"
+  },
+  "pillow": {
+   "depends": [],
+   "file_name": "pillow-10.2.0-cp312-cp312-pyodide_2024_0_wasm32.whl",
+   "imports": [
+    "PIL"
+   ],
+   "install_dir": "site",
+   "name": "Pillow",
+   "package_type": "package",
+   "sha256": "43eab147a9355385a99eeac18fb577d4af2fe4bd0bbd23d3ba3ddb92e72c2815",
+   "unvendored_tests": false,
+   "version": "10.2.0"
+  },
+  "charset-normalizer": {
+   "depends": [],
+   "file_name": "charset_normalizer-3.3.2-py3-none-any.whl",
+   "imports": [
+    "charset_normalizer"
+   ],
+   "install_dir": "site",
+   "name": "charset-normalizer",
+   "package_type": "package",
+   "sha256": "7c353af5d4343f3790fb5ebd952d3e11200e60ddf37016b33d2ce4815edad749",
+   "unvendored_tests": false,
+   "version": "3.3.2"
+  },
+  "ssl": {
+   "depends": [
+    "openssl"
+   ],
+   "file_name": "ssl-1.0.0-cp312-cp312-pyodide_2024_0_wasm32.whl",
+   "imports": [
+    "ssl",
+    "_ssl"
+   ],
+   "install_dir": "site",
+   "name": "ssl",
+   "package_type": "cpython_module",
+   "sha256": "1af0b011a3043331a8a2a358832dcee736deff73a55ad0393222ea533942094a",
+   "unvendored_tests": false,
+   "version": "1.0.0"
+  },
+  "openssl": {
+   "depends": [],
+   "file_name": "openssl-1.1.1w.zip",
+   "imports": [],
+   "install_dir": "dynlib",
+   "name": "openssl",
+   "package_type": "shared_library",
+   "sha256": "20b92cd9b9adb1a739af9f93772b60c084203aacf63ae1b2353951bd80c97f08",
+   "unvendored_tests": false,
+   "version": "1.1.1w"
+  },
+  "annotated-doc": {
+   "name": "annotated-doc",
+   "version": "0.0.5",
+   "file_name": "annotated_doc-0.0.5-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "97dc4bf6b3cb5d81df5393949b2aa65a52d1b0296989c231528ca675ca43a514",
+   "package_type": "package",
+   "imports": [
+    "annotated_doc"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "anyio": {
+   "name": "anyio",
+   "version": "4.15.1",
+   "file_name": "anyio-4.15.1-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "2ca7aa4d405ac0fba9fe48974463ffef4cd05c8752217f185e1c4d365529acff",
+   "package_type": "package",
+   "imports": [
+    "anyio"
+   ],
+   "depends": [
+    "idna",
+    "typing-extensions"
+   ],
+   "unvendored_tests": false
+  },
+  "ecdsa": {
+   "name": "ecdsa",
+   "version": "0.19.1",
+   "file_name": "ecdsa-0.19.1-py2.py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "79c08d5adf3beaa076ed9ebb969954024833430067aa9f5017773e3cf4c480a6",
+   "package_type": "package",
+   "imports": [
+    "ecdsa"
+   ],
+   "depends": [
+    "six"
+   ],
+   "unvendored_tests": false
+  },
+  "et-xmlfile": {
+   "name": "et-xmlfile",
+   "version": "2.0.0",
+   "file_name": "et_xmlfile-2.0.0-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "b316cfe05330d1b8fb42071662ac6c9ddcd7c1d2486721479413c95f73d9a03f",
+   "package_type": "package",
+   "imports": [
+    "et_xmlfile"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "fastapi": {
+   "name": "fastapi",
+   "version": "0.143.3",
+   "file_name": "fastapi-0.143.3-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "2f70cf3c086968f6af498f9dd2d7bc983d18758b8796e3c8c8748ed159764005",
+   "package_type": "package",
+   "imports": [
+    "fastapi"
+   ],
+   "depends": [
+    "starlette",
+    "pydantic",
+    "typing-extensions",
+    "typing-inspection",
+    "annotated-doc",
+    "opentelemetry-api"
+   ],
+   "unvendored_tests": false
+  },
+  "idna": {
+   "name": "idna",
+   "version": "3.20",
+   "file_name": "idna-3.20-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "59ca35a4823745a6269e8825bb5f519922ac95577bdacd525acc7be1d32fd8a7",
+   "package_type": "package",
+   "imports": [
+    "idna"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "openpyxl": {
+   "name": "openpyxl",
+   "version": "3.1.5",
+   "file_name": "openpyxl-3.1.5-py2.py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "76110eb2d5d0b6258b8255ba2b718d51b2882ab9fe18a9f0a9c93246689d7212",
+   "package_type": "package",
+   "imports": [
+    "openpyxl"
+   ],
+   "depends": [
+    "et-xmlfile"
+   ],
+   "unvendored_tests": false
+  },
+  "opentelemetry-api": {
+   "name": "opentelemetry-api",
+   "version": "1.45.1",
+   "file_name": "opentelemetry_api-1.45.1-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "aac14a064a9a88166576640b1566b453a11a1ff3c6cf979bc03de8342b6586cf",
+   "package_type": "package",
+   "imports": [
+    "opentelemetry"
+   ],
+   "depends": [
+    "typing-extensions"
+   ],
+   "unvendored_tests": false
+  },
+  "pypdf": {
+   "name": "pypdf",
+   "version": "5.9.0",
+   "file_name": "pypdf-5.9.0-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "ee393d98e01092c1315ff3305b7801f1836cb36d5e268d816a7977ec06b20d8a",
+   "package_type": "package",
+   "imports": [
+    "pypdf"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "python-multipart": {
+   "name": "python-multipart",
+   "version": "0.0.32",
+   "file_name": "python_multipart-0.0.32-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "d685019342bbf6fcee54f3152edcb0ed29873bb509231b316d0ee43e029746c3",
+   "package_type": "package",
+   "imports": [
+    "multipart",
+    "python_multipart"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "reportlab": {
+   "name": "reportlab",
+   "version": "5.0.1",
+   "file_name": "reportlab-5.0.1-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "3383e4eb3f0a00a437658c2bffa4850f3ca45eba24c0b7557b07fb8751d32f6b",
+   "package_type": "package",
+   "imports": [
+    "reportlab"
+   ],
+   "depends": [
+    "pillow",
+    "charset-normalizer"
+   ],
+   "unvendored_tests": false
+  },
+  "segno": {
+   "name": "segno",
+   "version": "1.6.6",
+   "file_name": "segno-1.6.6-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "636e552780a696ada8be92f5bda02d83f4b9c119acbd71fa2ae9bb8fb3108351",
+   "package_type": "package",
+   "imports": [
+    "segno"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "six": {
+   "name": "six",
+   "version": "1.17.0",
+   "file_name": "six-1.17.0-py2.py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "599ceed5745d3056a12940e69b1753cc8e008237d43904b668f8db705f3d3804",
+   "package_type": "package",
+   "imports": [
+    "six"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "starlette": {
+   "name": "starlette",
+   "version": "1.6.0",
+   "file_name": "starlette-1.6.0-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "458671f4c9e06169bd5d8dc33bcf4d977d2d81a9188fb7e1f0664f77a914b562",
+   "package_type": "package",
+   "imports": [
+    "starlette"
+   ],
+   "depends": [
+    "anyio",
+    "typing-extensions"
+   ],
+   "unvendored_tests": false
+  },
+  "typing-extensions": {
+   "name": "typing-extensions",
+   "version": "4.16.0",
+   "file_name": "typing_extensions-4.16.0-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "8e42caae704a850ddcdba8a02933d2bb2d8aba7aeed6a37dc45042711efdddc7",
+   "package_type": "package",
+   "imports": [
+    "typing_extensions"
+   ],
+   "depends": [],
+   "unvendored_tests": false
+  },
+  "typing-inspection": {
+   "name": "typing-inspection",
+   "version": "0.4.4",
+   "file_name": "typing_inspection-0.4.4-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "01bdd993dea9abe67b5bbe8fd8d39885ca7fbe8fed5808ceda6b50a9d3daa08d",
+   "package_type": "package",
+   "imports": [
+    "typing_inspection"
+   ],
+   "depends": [
+    "typing-extensions"
+   ],
+   "unvendored_tests": false
+  },
+  "kp-app": {
+   "name": "kp-app",
+   "version": "3.0.0",
+   "file_name": "kp_app-3.0.0-py3-none-any.whl",
+   "install_dir": "site",
+   "sha256": "d43f011c00b7227d64fd93206bf248bc1bfb3422dfa9ce3534e9cf3370b704d7",
+   "package_type": "package",
+   "imports": [
+    "app"
+   ],
+   "depends": [
+    "annotated-doc",
+    "anyio",
+    "ecdsa",
+    "et-xmlfile",
+    "fastapi",
+    "idna",
+    "openpyxl",
+    "opentelemetry-api",
+    "pypdf",
+    "python-multipart",
+    "reportlab",
+    "segno",
+    "six",
+    "starlette",
+    "typing-extensions",
+    "typing-inspection",
+    "pydantic",
+    "pydantic-core",
+    "annotated-types",
+    "sqlite3",
+    "pillow",
+    "charset-normalizer",
+    "ssl",
+    "openssl"
+   ],
+   "unvendored_tests": false
+  }
+ }
+}
